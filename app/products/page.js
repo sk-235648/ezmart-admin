@@ -6,6 +6,7 @@ export default function AddProductPage() {
   const [inputTag, setInputTag] = useState('');
   const [expense, setExpense] = useState('');
   const [expenseError, setExpenseError] = useState('');
+  const [category, setCategory] = useState('');
 
   const [imageFiles, setImageFiles] = useState([]);
   const [isUploading, setIsUploading] = useState(false);
@@ -75,6 +76,7 @@ export default function AddProductPage() {
       images: uploadedImageUrls,
       tags,
       expense,
+      category,
     });
     alert('Form submited ! (Check console)');
   };
@@ -96,7 +98,7 @@ export default function AddProductPage() {
           )}
         </div>
 
-        {/* Single File Input */}
+        {/* File Input */}
         <div className="mb-6">
           <label className="block text-sm font-medium text-gray-700 mb-1">Images (Max 4)</label>
           <div className="flex items-center gap-4">
@@ -117,7 +119,7 @@ export default function AddProductPage() {
           </div>
         </div>
 
-        {/* Price / Expense / Category */}
+        {/* Price, Expense, Category */}
         <div className="grid grid-cols-3 gap-4 mb-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Price ($)</label>
@@ -140,11 +142,16 @@ export default function AddProductPage() {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
-            <input
-              type="text"
-              placeholder="Category"
-              className="w-full border border-gray-300 rounded-md p-2"
-            />
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="w-full border border-gray-300 rounded-md p-2 bg-white"
+            >
+              <option value="">Select Category</option>
+              <option value="Shirts">Shirts</option>
+              <option value="T-Shirts">T-Shirts</option>
+              <option value="Jeans">Jeans</option>
+            </select>
           </div>
         </div>
 
