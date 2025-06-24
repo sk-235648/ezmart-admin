@@ -76,7 +76,7 @@ export default function AddProductPage() {
       tags,
       expense,
     });
-    alert('Form submitted! (Check console)');
+    alert('Form submited ! (Check console)');
   };
 
   return (
