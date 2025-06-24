@@ -18,7 +18,7 @@ export default function Sidebar() {
 
   return (
     <aside className="w-64 bg-[#0f1114] text-white p-6 space-y-4">
-      <h1 className="text-xl font-bold">ProfitPulse</h1>
+      <h1 className="text-xl font-bold">EZmart</h1>
       <nav className="space-y-2">
         {tabs.map((tab) => (
           <Link
