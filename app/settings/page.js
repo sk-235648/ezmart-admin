@@ -12,7 +12,7 @@ export default function SettingsPage() {
           <span className="text-sm sm:text-base">Kristina Evans</span>
           <img
             src="/avatar.jpg"
-            alt="Kristina"
+            alt="Kristinaa"
             className="w-7 h-7 sm:w-8 sm:h-8 rounded-full"
           />
         </div>
