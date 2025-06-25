@@ -1,44 +1,76 @@
 'use client';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import { ToastContainer, toast, Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function AddProductPage() {
-  const [tags, setTags] = useState([]);
-  const [inputTag, setInputTag] = useState('');
-  const [expense, setExpense] = useState('');
+  const [data, setData] = useState({
+    tags: [],
+    inputTag: '',
+    expense: '',
+    category: '',
+    price: '49.99',
+    collections: '',
+    colors: '',
+    sizes: ''
+  });
   const [expenseError, setExpenseError] = useState('');
-  const [category, setCategory] = useState('');
-
-  const [imageFiles, setImageFiles] = useState([]);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadedImageUrls, setUploadedImageUrls] = useState(['', '', '', '']);
+  const fileInputRef = useRef(null);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setData(prev => ({ ...prev, [name]: value }));
+    
+    if (name === 'expense') {
+      setExpenseError(value && parseFloat(value) < 0.1 ? 'Number must be ≥ 0.1' : '');
+    }
+  };
 
   const handleTagInput = (e) => {
-    if (e.key === 'Enter' && inputTag.trim() !== '') {
+    if (e.key === 'Enter' && data.inputTag.trim() !== '') {
       e.preventDefault();
-      if (!tags.includes(inputTag.trim())) {
-        setTags([...tags, inputTag.trim()]);
+      if (!data.tags.includes(data.inputTag.trim())) {
+        setData(prev => ({
+          ...prev,
+          tags: [...prev.tags, prev.inputTag.trim()],
+          inputTag: ''
+        }));
+      } else {
+        setData(prev => ({ ...prev, inputTag: '' }));
       }
-      setInputTag('');
     }
   };
 
   const removeTag = (tagToRemove) => {
-    setTags(tags.filter(tag => tag !== tagToRemove));
-  };
-
-  const handleExpenseChange = (e) => {
-    const value = e.target.value;
-    setExpense(value);
-    setExpenseError(value && parseFloat(value) < 0.1 ? 'Number must be ≥ 0.1' : '');
+    setData(prev => ({
+      ...prev,
+      tags: prev.tags.filter(tag => tag !== tagToRemove)
+    }));
   };
 
   const handleFileChange = (e) => {
-    const selected = Array.from(e.target.files).slice(0, 4); // Max 4
+    const selected = Array.from(e.target.files).slice(0, 4);
     setImageFiles(selected);
   };
 
-  const handleUpload = async () => {
-    if (imageFiles.length === 0) return alert('Please select files to upload');
+  const handleUpload = async (e) => {
+    e.preventDefault();
+    if (imageFiles.length === 0) {
+      toast.error('Please select files to upload', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      return;
+    }
 
     setIsUploading(true);
     const urls = [];
@@ -56,11 +88,33 @@ export default function AddProductPage() {
         if (data.url) {
           urls.push(data.url);
         } else {
-          alert('One of the uploads failed');
+          toast.error('One of the uploads failed', {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          });
+          break;
         }
       } catch (error) {
         console.error(error);
-        alert('Upload error');
+        toast.error('Upload error', {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+        break;
       }
     }
 
@@ -68,21 +122,87 @@ export default function AddProductPage() {
     while (filled.length < 4) filled.push('');
     setUploadedImageUrls(filled);
     setIsUploading(false);
-    alert('All images uploaded!');
+    
+    toast.success('All images uploaded!', {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
   };
 
-  const handleSubmit = () => {
-    console.log('Submitted with:', {
-      images: uploadedImageUrls,
-      tags,
-      expense,
-      category,
-    });
-    alert('Form submited ! (Check console)');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('/api/products', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          images: uploadedImageUrls,
+          tags: data.tags,
+          expense: data.expense,
+          category: data.category,
+          price: data.price,
+          collections: data.collections,
+          colors: data.colors,
+          sizes: data.sizes
+        }),
+      });
+
+      if (!response.ok) throw new Error('Submission failed');
+      
+      toast.success('Form submitted successfully!', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+
+      // Reset form
+      setData({
+        tags: [],
+        inputTag: '',
+        expense: '',
+        category: '',
+        price: '49.99',
+        collections: '',
+        colors: '',
+        sizes: ''
+      });
+      setUploadedImageUrls(['', '', '', '']);
+      if (fileInputRef.current) fileInputRef.current.value = '';
+      
+    } catch (error) {
+      console.error('Submission error:', error);
+      toast.error('Submission failed. Please try again.', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
   };
 
   return (
     <div className="min-h-screen bg-white px-6 py-10">
+      <ToastContainer />
       <div className="max-w-4xl mx-auto">
 
         {/* Image Previews */}
@@ -101,22 +221,23 @@ export default function AddProductPage() {
         {/* File Input */}
         <div className="mb-6">
           <label className="block text-sm font-medium text-gray-700 mb-1">Images (Max 4)</label>
-          <div className="flex items-center gap-4">
+          <form onSubmit={handleUpload} className="flex items-center gap-4">
             <input
               type="file"
               multiple
               accept="image/*"
               onChange={handleFileChange}
+              ref={fileInputRef}
               className="flex-1 border-2 border-emerald-400 rounded-lg bg-emerald-50 text-gray-700 p-3"
             />
             <button
-              onClick={handleUpload}
+              type="submit"
               disabled={isUploading}
               className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
             >
               {isUploading ? 'Uploading...' : 'Upload'}
             </button>
-          </div>
+          </form>
         </div>
 
         {/* Price, Expense, Category */}
@@ -125,17 +246,20 @@ export default function AddProductPage() {
             <label className="block text-sm font-medium text-gray-700 mb-1">Price ($)</label>
             <input
               type="number"
+              name="price"
+              value={data.price}
+              onChange={handleChange}
               placeholder="0.0"
               className="w-full border border-gray-300 rounded-md p-2"
-              defaultValue="49.99"
             />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Expense ($)</label>
             <input
               type="number"
-              value={expense}
-              onChange={handleExpenseChange}
+              name="expense"
+              value={data.expense}
+              onChange={handleChange}
               className="w-full border border-gray-300 rounded-md p-2"
             />
             {expenseError && <p className="text-red-600 text-sm mt-1">{expenseError}</p>}
@@ -143,8 +267,9 @@ export default function AddProductPage() {
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
             <select
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              name="category"
+              value={data.category}
+              onChange={handleChange}
               className="w-full border border-gray-300 rounded-md p-2 bg-white"
             >
               <option value="">Select Category</option>
@@ -160,14 +285,15 @@ export default function AddProductPage() {
           <label className="block text-sm font-medium text-gray-700 mb-1">Tags</label>
           <input
             type="text"
-            value={inputTag}
-            onChange={(e) => setInputTag(e.target.value)}
+            name="inputTag"
+            value={data.inputTag}
+            onChange={handleChange}
             onKeyDown={handleTagInput}
             className="w-full border border-gray-300 rounded-md p-2"
             placeholder="Press Enter to add"
           />
           <div className="flex flex-wrap mt-2 gap-2">
-            {tags.map((tag, idx) => (
+            {data.tags.map((tag, idx) => (
               <span
                 key={idx}
                 className="bg-gray-200 px-3 py-1 rounded-full text-sm cursor-pointer"
@@ -185,6 +311,9 @@ export default function AddProductPage() {
             <label className="block text-sm font-medium text-gray-700 mb-1">Collections</label>
             <input
               type="text"
+              name="collections"
+              value={data.collections}
+              onChange={handleChange}
               placeholder="Collections"
               className="w-full border border-gray-300 rounded-md p-2"
             />
@@ -193,6 +322,9 @@ export default function AddProductPage() {
             <label className="block text-sm font-medium text-gray-700 mb-1">Colors</label>
             <input
               type="text"
+              name="colors"
+              value={data.colors}
+              onChange={handleChange}
               placeholder="Colors"
               className="w-full border border-gray-300 rounded-md p-2"
             />
@@ -201,6 +333,9 @@ export default function AddProductPage() {
             <label className="block text-sm font-medium text-gray-700 mb-1">Sizes</label>
             <input
               type="text"
+              name="sizes"
+              value={data.sizes}
+              onChange={handleChange}
               placeholder="Sizes"
               className="w-full border border-gray-300 rounded-md p-2"
             />
