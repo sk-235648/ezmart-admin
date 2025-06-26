@@ -2,21 +2,17 @@
 import "./globals.css";
 import Sidebar from "../components/Sidebar";
 
+// app/layout.js
+ 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body>
-        <div className="w-screen h-screen flex items-center justify-center">
-          <div className="w-full h-full box-border">
-            <div className="w-full h-full bg-white shadow-xl flex overflow-hidden">
-              <Sidebar />
-              <div className="flex-1 flex flex-col overflow-hidden">
-                {children}
-              </div>
-            </div>
-          </div>
-        </div>
+    <html className="h-full">
+      <body className="h-full flex flex-col md:flex-row">
+        <Sidebar />
+        <main className="flex-1 overflow-y-auto md:ml-64">
+          {children}
+        </main>
       </body>
     </html>
-  );
+  )
 }
