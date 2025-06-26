@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function AddProductPage() {
   const [data, setData] = useState({
+    title: "", // Added title field
     expense: "",
     category: "",
     price: "49.99",
@@ -91,7 +92,13 @@ export default function AddProductPage() {
       return;
     }
 
+    if (!data.title) {
+      toast.error("Please enter a product title");
+      return;
+    }
+
     const payload = {
+      title: data.title, // Added title to payload
       price: parseFloat(data.price || "0"),
       expenses: data.expense !== "" ? parseFloat(data.expense) : 0,
       images: validImageUrls,
@@ -239,8 +246,22 @@ export default function AddProductPage() {
           </div>
         </div>
 
-        {/* Colors / Sizes */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+        {/* Title, Colors, Sizes */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+          <div className="sm:col-span-1">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Product Title
+            </label>
+            <input
+              type="text"
+              name="title"
+              value={data.title}
+              onChange={handleChange}
+              placeholder="Product Name"
+              className="w-full border border-gray-300 rounded-md p-2"
+              required
+            />
+          </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Colors (comma separated)
