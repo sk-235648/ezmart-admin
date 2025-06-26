@@ -1,5 +1,6 @@
 import { connectDB } from "@/lib/db";
 import Product from "@/models/product";
+
 export async function POST(request) {
   try {
     await connectDB();
@@ -8,6 +9,7 @@ export async function POST(request) {
     console.log("📥 Received Body:", body);
 
     if (
+      !body.title || // Added title validation
       body.price === undefined ||
       body.expenses === undefined ||
       !body.category ||
@@ -16,12 +18,16 @@ export async function POST(request) {
     ) {
       console.log("❌ Validation failed");
       return new Response(
-        JSON.stringify({ success: false, error: "Missing required fields" }),
+        JSON.stringify({ 
+          success: false, 
+          error: "Missing required fields (title, price, expenses, category, or images)" 
+        }),
         { status: 400, headers: { "Content-Type": "application/json" } }
       );
     }
 
     const productData = {
+      title: body.title, // Added title
       ...body,
       colors: Array.isArray(body.colors) ? body.colors.join(",") : body.colors,
       sizes: Array.isArray(body.sizes) ? body.sizes.join(",") : body.sizes,
