@@ -16,7 +16,7 @@ const data = [
   { month: "Feb", sales: 275.93 },
   { month: "Mar", sales: 120 },
   { month: "Apr", sales: 140 },
-  { month: "May", sales: 386 },
+  { month: "May", sales: 385 },
   { month: "Jun", sales: 0 },
   { month: "Jul", sales: 0 },
   { month: "Aug", sales: 0 },
