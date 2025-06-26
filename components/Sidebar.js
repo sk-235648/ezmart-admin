@@ -9,7 +9,7 @@ export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
 
   const tabs = [
-    { name: "Dashboard", path: "/" },
+    { name: "Dashboard", path: "/dashboard" },
     { name: "Orders", path: "/orders" },
     { name: "Payments", path: "/payments" },
     { name: "Customers", path: "/customers" },

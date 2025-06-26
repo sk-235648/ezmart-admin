@@ -1,103 +1,53 @@
-// app/page.js
 "use client";
-import {
-  LineChart,
-  Line,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
-import { DollarSign, ShoppingBag, Users } from "lucide-react";
+import { useState } from "react";
 
-const data = [
-  { month: "Jan", sales: 0 },
-  { month: "Feb", sales: 275.93 },
-  { month: "Mar", sales: 0 },
-  { month: "Apr", sales: 0 },
-  { month: "May", sales: 0 },
-  { month: "Jun", sales: 0 },
-  { month: "Jul", sales: 0 },
-  { month: "Aug", sales: 0 },
-  { month: "Sep", sales: 0 },
-  { month: "Oct", sales: 0 },
-  { month: "Nov", sales: 0 },
-  { month: "Dec", sales: 0 },
-];
+export default function Home() {
+  const [showLogin, setShowLogin] = useState(true);
 
-export default function Dashboard() {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    console.log(`${name} - ${value}`);
+  };
+
   return (
-    <div className="flex-1 p-4 md:p-6 bg-[#fdfcf9] flex flex-col min-h-screen">
-      {/* Header */}
-      <div className="flex justify-between items-center border-b pb-4 mb-4 md:mb-6">
-        <h1 className="text-xl md:text-2xl font-semibold">Dashboard</h1>
-        <div className="flex items-center gap-2">
-          <span className="text-sm md:text-base">Kristina Evans</span>
-          <img
-            src="/avatar.jpg"
-            alt="Kristina"
-            className="w-8 h-8 rounded-full"
-          />
-        </div>
-      </div>
-
-      {/* Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 mb-6 md:mb-8">
-        <div className="border rounded-md p-3 md:p-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-sm md:text-md font-semibold">Total Revenue</h2>
-            <DollarSign className="h-4 w-4 md:h-5 md:w-5 text-gray-500" />
-          </div>
-          <p className="text-lg md:text-xl font-semibold mt-1 md:mt-2">
-            $ 275.93
-          </p>
-        </div>
-        <div className="border rounded-md p-3 md:p-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-sm md:text-md font-semibold">Total Orders</h2>
-            <ShoppingBag className="h-4 w-4 md:h-5 md:w-5 text-gray-500" />
-          </div>
-          <p className="text-lg md:text-xl font-semibold mt-1 md:mt-2">3</p>
-        </div>
-        <div className="border rounded-md p-3 md:p-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-sm md:text-md font-semibold">
-              Total Customers
-            </h2>
-            <Users className="h-4 w-4 md:h-5 md:w-5 text-gray-500" />
-          </div>
-          <p className="text-lg md:text-xl font-semibold mt-1 md:mt-2">1</p>
-        </div>
-      </div>
-
-      {/* Chart */}
-      <div className="border rounded-md p-3 md:p-4 flex-1 flex flex-col">
-        <h2 className="text-sm md:text-md font-semibold mb-3 md:mb-4">
-          Sales Chart ($)
-        </h2>
-        <div className="flex-1 min-h-[250px] md:min-h-[300px]">
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart
-              data={data}
-              margin={{ top: 5, right: 5, bottom: 5, left: 0 }}
-            >
-              <CartesianGrid stroke="#e0e0e0" strokeDasharray="5 5" />
-              <XAxis dataKey="month" />
-              <YAxis />
-              <Tooltip />
-              <Line
-                type="monotone"
-                dataKey="sales"
-                stroke="#6366F1"
-                strokeWidth={2}
-                dot={{ r: 3 }}
-                activeDot={{ r: 6 }}
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-100 to-gray-200">
+      {showLogin && (
+        <div className="bg-white shadow-xl rounded-2xl p-6 w-full max-w-sm">
+          <h2 className="text-2xl font-bold mb-4 text-center">Welcome To Ezmart</h2>
+          <form className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Email
+              </label>
+              <input
+                name="email"
+                onChange={handleChange}
+                type="email"
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
+                placeholder="you@example.com"
               />
-            </LineChart>
-          </ResponsiveContainer>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Password
+              </label>
+              <input
+                name="password"
+                onChange={handleChange}
+                type="password"
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
+                placeholder="••••••••"
+              />
+            </div>
+            <button
+              type="submit"
+              className="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition"
+            >
+              Login
+            </button>
+          </form>
         </div>
-      </div>
+      )}
     </div>
   );
 }
