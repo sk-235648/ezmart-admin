@@ -1,5 +1,8 @@
-// app/dashboard/page.js
+// app/admin/dashboard/page.js
 "use client";
+
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import {
   LineChart,
   Line,
@@ -27,6 +30,7 @@ const data = [
 ];
 
 export default function Dashboard() {
+  const router = useRouter();
   return (
     <div className="flex-1 p-4 md:p-6 bg-[#fdfcf9] flex flex-col min-h-screen">
       {/* Header */}

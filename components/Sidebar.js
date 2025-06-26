@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Menu, X } from "lucide-react";
 
 export default function Sidebar() {
@@ -9,13 +10,21 @@ export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
 
   const tabs = [
-    { name: "Dashboard", path: "/dashboard" },
-    { name: "Orders", path: "/orders" },
-    { name: "Payments", path: "/payments" },
-    { name: "Customers", path: "/customers" },
-    { name: "Products", path: "/products" },
-    { name: "Settings", path: "/settings" },
+    { name: "Dashboard", path: "/admin/dashboard" },
+    { name: "Orders", path: "/admin/orders" },
+    { name: "Payments", path: "/admin/payments" },
+    { name: "Customers", path: "/admin/customers" },
+    { name: "Products", path: "/admin/products" },
+    { name: "Settings", path: "/admin/settings" },
+    { name: "Add admin", path: "/admin/signup" },
   ];
+
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await fetch("/api/admin/logout", { method: "POST" });
+    router.push("/admin");
+  };
 
   return (
     <>
@@ -33,28 +42,38 @@ export default function Sidebar() {
           ${isOpen ? "right-0" : "-right-64"} md:left-0 md:right-auto`}
       >
         <h1 className="text-xl font-bold">EZmart</h1>
-        <nav className="space-y-2">
-          {tabs.map((tab) => (
-            <Link
-              key={tab.path}
-              href={tab.path}
-              onClick={() => setIsOpen(false)}
-              className={`py-2 px-4 rounded-lg cursor-pointer transition-colors duration-200 block ${
-                pathname === tab.path
-                  ? "bg-white text-black"
-                  : "hover:bg-gray-800"
-              }`}
+        <div className="flex flex-col justify-between h-[85vh]">
+          {/* Navigation links */}
+          <nav className="space-y-2">
+            {tabs.map((tab) => (
+              <Link
+                key={tab.path}
+                href={tab.path}
+                onClick={() => setIsOpen(false)}
+                className={`py-2 px-4 rounded-lg cursor-pointer transition-colors duration-200 block ${
+                  pathname === tab.path
+                    ? "bg-white text-black"
+                    : "hover:bg-gray-800"
+                }`}
+              >
+                {tab.name}
+              </Link>
+            ))}
+          </nav>
+          <div>
+            <button
+              onClick={handleLogout}
+              className="cursor-pointer text-sm text-white font-bold mt-8 bg-red-500 p-3 rounded-lg hover:bg-red-600 transition-colors duration-200 w-full"
             >
-              {tab.name}
-            </Link>
-          ))}
-        </nav>
-        <button className="text-sm text-gray-400 mt-8">Log out</button>
+              Log out
+            </button>
+          </div>
+        </div>
       </aside>
 
       {/* Overlay for mobile */}
       {isOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/50 z-30 md:hidden"
           onClick={() => setIsOpen(false)}
         />
