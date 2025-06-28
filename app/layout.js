@@ -1,22 +1,15 @@
 // app/layout.js
 import "./globals.css";
-import Sidebar from "../components/Sidebar";
+
+export const metadata = {
+  title: "EZmart",
+  description: "E-commerce dashboard",
+};
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body>
-        <div className="w-screen h-screen flex items-center justify-center">
-          <div className="w-full h-full box-border">
-            <div className="w-full h-full bg-white shadow-xl flex overflow-hidden">
-              <Sidebar />
-              <div className="flex-1 flex flex-col overflow-hidden">
-                {children}
-              </div>
-            </div>
-          </div>
-        </div>
-      </body>
+    <html lang="en" className="h-full">
+      <body className="h-full">{children}</body>
     </html>
   );
 }
