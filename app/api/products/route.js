@@ -3,13 +3,14 @@ import Product from "@/models/product";
 
 export async function POST(request) {
   try {
-    await connectDB();
+    // Connect to ezmart database specifically for this operation
+    await connectDB('ezmart');
 
     const body = await request.json();
     console.log("📥 Received Body:", body);
 
     if (
-      !body.title || // Added title validation
+      !body.title ||
       body.price === undefined ||
       body.expenses === undefined ||
       !body.category ||
@@ -20,14 +21,14 @@ export async function POST(request) {
       return new Response(
         JSON.stringify({ 
           success: false, 
-          error: "Missing required fields (title, price, expenses, category, or images)" 
+          error: "Missing required fields" 
         }),
         { status: 400, headers: { "Content-Type": "application/json" } }
       );
     }
 
     const productData = {
-      title: body.title, // Added title
+      title: body.title,
       ...body,
       colors: Array.isArray(body.colors) ? body.colors.join(",") : body.colors,
       sizes: Array.isArray(body.sizes) ? body.sizes.join(",") : body.sizes,
