@@ -1,10 +1,14 @@
-// mode
 import mongoose from "mongoose";
+import { connectDB } from "@/lib/db";
 
-const AdminSchema = new mongoose.Schema({
-  name: String,
-  email: { type: String, unique: true },
-  password: String,
+const conn = await connectDB("ezmart-admin");
+
+const adminSchema = new mongoose.Schema({
+  name:{type:String},
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  // other admin fields
 });
 
-export const AdminModel = mongoose.models.Admin || mongoose.model("Admin", AdminSchema);
+const Admin = conn.models.Admin || conn.model("Admin", adminSchema);
+export default Admin;
