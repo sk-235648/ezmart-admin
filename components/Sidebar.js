@@ -14,7 +14,7 @@ export default function Sidebar() {
     { name: "Orders", path: "/admin/orders" },
     { name: "Payments", path: "/admin/payments" },
     { name: "Customers", path: "/admin/customers" },
-    { name: "Products", path: "/admin/products" },
+    { name: "Products", path: "/admin/products/list" },
     { name: "Settings", path: "/admin/settings" },
     { name: "Add admin", path: "/admin/signup" },
   ];
