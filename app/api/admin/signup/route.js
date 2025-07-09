@@ -14,7 +14,7 @@ export async function POST(req) {
 
     const existing = await AdminModel.findOne({ email });
     if (existing) {
-      return NextResponse.json({ message: "Admin already exists" }, { status: 400 });
+      return NextResponse.json({ message: "Admin already exist" }, { status: 400 });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
