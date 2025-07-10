@@ -65,9 +65,9 @@ export default function PaymentsPage() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
         <h2 className="text-xl md:text-2xl font-semibold">Payments</h2>
         <div className="flex items-center gap-2">
-          <span className="text-sm md:text-base">Kristina Evans</span>
+          <span className="text-sm md:text-base">Admin</span>
           <img
-            src="/avatar.jpg"
+            src="/avatar.png"
             alt="Kristina"
             className="w-7 h-7 md:w-8 md:h-8 rounded-full"
           />

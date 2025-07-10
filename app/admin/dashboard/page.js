@@ -128,9 +128,9 @@ export default function Dashboard() {
       <div className="flex justify-between items-center border-b pb-4 mb-4 md:mb-6">
         <h1 className="text-xl md:text-2xl font-semibold">Dashboard</h1>
         <div className="flex items-center gap-2">
-          <span className="text-sm md:text-base">Kristina Evans</span>
+          <span className="text-sm md:text-base">Admin</span>
           <img
-            src="/avatar.jpg"
+            src="/avatar.png"
             alt="Kristina"
             className="w-8 h-8 rounded-full"
           />

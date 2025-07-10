@@ -9,9 +9,9 @@ export default function SettingsPage() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-6 gap-3">
         <h2 className="text-xl sm:text-2xl font-semibold">Settings</h2>
         <div className="flex items-center gap-2">
-          <span className="text-sm sm:text-base">Kristina Evans</span>
+          <span className="text-sm sm:text-base">Admin</span>
           <img
-            src="/avatar.jpg"
+            src="/avatar.png"
             alt="Kristina"
             className="w-7 h-7 sm:w-8 sm:h-8 rounded-full"
           />
@@ -114,7 +114,7 @@ export default function SettingsPage() {
                   </label>
                   <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                     <img
-                      src="/avatar.jpg"
+                      src="/avatar.png"
                       alt="Profile"
                       className="w-14 h-14 sm:w-16 sm:h-16 rounded-full"
                     />
