@@ -8,7 +8,7 @@ export default function AddProductPage() {
     title: "", // Added title field
     expense: "",
     category: "",
-    price: "49.99",
+    price: "00",
     colors: "",
     sizes: "",
   });
@@ -189,10 +189,10 @@ export default function AddProductPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Price ($)
+              Price (₹)
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">₹</span>
               <input
                 type="number"
                 name="price"
@@ -207,10 +207,10 @@ export default function AddProductPage() {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Expense ($)
+              Expense (₹)
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">₹</span>
               <input
                 type="number"
                 name="expense"

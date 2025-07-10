@@ -24,7 +24,7 @@ export default function PaymentsPage() {
           const formattedPayments = data.payments.map(payment => ({
             id: `#PAY-${payment._id.substring(0, 4)}`,
             type: "Income", // Assuming all payments are income for now
-            amount: `$${payment.amount?.toFixed(2)}`,
+            amount: `₹${payment.amount?.toFixed(2)}`,
             status: payment.status,
             date: new Date(payment.paymentDate).toLocaleDateString('en-US', {
               month: 'short',
@@ -77,9 +77,9 @@ export default function PaymentsPage() {
       {/* Summary Cards */}
       <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 mb-6">
         {[
-          { title: "Total Income", value: `$${summary.totalIncome.toFixed(2)}`, icon: <FiDownload className="h-4 w-4 md:h-5 md:w-5 text-green-500" />, color: "green" },
-          { title: "Total Expenses", value: `$${summary.totalExpenses.toFixed(2)}`, icon: <FiUpload className="h-4 w-4 md:h-5 md:w-5 text-red-500" />, color: "red" },
-          { title: "Net Balance", value: `$${summary.netBalance.toFixed(2)}`, icon: <FiDollarSign className="h-4 w-4 md:h-5 md:w-5 text-blue-500" />, color: "blue" }
+          { title: "Total Income", value: `₹${summary.totalIncome.toFixed(2)}`, icon: <FiDownload className="h-4 w-4 md:h-5 md:w-5 text-green-500" />, color: "green" },
+          { title: "Total Expenses", value: `₹${summary.totalExpenses.toFixed(2)}`, icon: <FiUpload className="h-4 w-4 md:h-5 md:w-5 text-red-500" />, color: "red" },
+          { title: "Net Balance", value: `₹${summary.netBalance.toFixed(2)}`, icon: <FiDollarSign className="h-4 w-4 md:h-5 md:w-5 text-blue-500" />, color: "blue" }
         ].map((card, index) => (
           <div key={index} className="border rounded-md p-3 md:p-4">
             <div className="flex items-center justify-between">

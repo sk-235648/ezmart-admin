@@ -151,7 +151,7 @@ export default function Dashboard() {
                 <DollarSign className="h-4 w-4 md:h-5 md:w-5 text-gray-500" />
               </div>
               <p className="text-lg md:text-xl font-semibold mt-1 md:mt-2">
-                $ {totalRevenue.toFixed(2)}
+                ₹ {totalRevenue.toFixed(2)}
               </p>
             </div>
             <div className="border rounded-md p-3 md:p-4">
@@ -177,7 +177,7 @@ export default function Dashboard() {
             {/* Monthly Sales Chart */}
             <div className="border rounded-md p-3 md:p-4 flex flex-col">
               <h2 className="text-sm md:text-md font-semibold mb-3 md:mb-4">
-                Monthly Sales ($)
+                Monthly Sales (₹)
               </h2>
               <div className="flex-1 min-h-[250px]">
                 <ResponsiveContainer width="100%" height={250}>
@@ -188,7 +188,7 @@ export default function Dashboard() {
                     <CartesianGrid stroke="#e0e0e0" strokeDasharray="5 5" />
                     <XAxis dataKey="month" />
                     <YAxis />
-                    <Tooltip formatter={(value) => [`$${value.toFixed(2)}`, 'Sales']} />
+                    <Tooltip formatter={(value) => [`₹${value.toFixed(2)}`, 'Sales']} />
                     <Line
                       type="monotone"
                       dataKey="sales"
@@ -248,7 +248,7 @@ export default function Dashboard() {
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="month" />
                   <YAxis />
-                  <Tooltip formatter={(value) => [`$${value.toFixed(2)}`, 'Revenue']} />
+                  <Tooltip formatter={(value) => [`₹${value.toFixed(2)}`, 'Revenue']} />
                   <Bar dataKey="sales" fill="#8884d8" name="Revenue" />
                 </BarChart>
               </ResponsiveContainer>

@@ -104,7 +104,7 @@ export default function ProductsListPage() {
                     />
                     <div>
                       <h3 className="font-medium text-lg">{product.name}</h3>
-                      <p className="text-gray-600 text-sm">${product.price.toFixed(2)}</p>
+                      <p className="text-gray-600 text-sm">₹{product.price.toFixed(2)}</p>
                       <div className="flex items-center gap-2 mt-1">
                         <span className="px-2 py-1 bg-gray-100 text-xs rounded-full">{product.category}</span>
                         <span className="px-2 py-1 bg-gray-100 text-xs rounded-full">Stock: {product.stock}</span>
@@ -168,7 +168,7 @@ export default function ProductsListPage() {
                       <div className="text-sm text-gray-900">{product.category}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">${product.price.toFixed(2)}</div>
+                      <div className="text-sm text-gray-900">₹{product.price.toFixed(2)}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm text-gray-900">{product.stock}</div>
