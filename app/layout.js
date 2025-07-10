@@ -2,7 +2,7 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "EZmart",
+  title: "EZmart-Admin",
   description: "E-commerce dashboard",
 };
 
